@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.movietv.R
 //import com.example.moviesapp.model.MovieOrShow
 import com.example.movietv.network.model.MovieOrShow
 
@@ -22,7 +23,7 @@ fun MovieItem(movie: MovieOrShow) {
         Image(
             painter = rememberAsyncImagePainter(
                 model = movie.poster ?: "https://via.placeholder.com/100",
-//                error = painterResource(R.drawable.placeholder_image)
+                error = painterResource(R.drawable.postor)
             ),
             contentDescription = movie.name,
             modifier = Modifier
