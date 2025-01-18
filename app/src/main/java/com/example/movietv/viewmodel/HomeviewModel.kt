@@ -50,6 +50,7 @@ class HomeViewModel(private val api: WatchmodeApi) : ViewModel() {
                         _error.value = "No results found"
                     }
                 }, { throwable ->
+//                    error handle
                     Log.e("API Error", throwable.message ?: "Unknown error")
                     _error.value = throwable.message ?: "An unknown error occurred"
                 })
