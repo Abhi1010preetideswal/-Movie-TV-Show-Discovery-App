@@ -20,7 +20,23 @@ class HomeViewModel(private val api: WatchmodeApi) : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
+    private val baseUrl = "https://api.watchmode.com/v1/search/"
+    private val apiKey = "WjOkFXMhndyW8rUXkaIP5oEm0iQrFbsdons3sovi"
+
     fun searchMovies(searchValue: String) {
+        // Check for empty input
+        if (searchValue.isBlank()) {
+            _error.value = "Search value cannot be empty"
+            return
+        }
+
+        // Clear previous results
+        _movies.value = emptyList()
+
+        // Construct and log the API URL
+        val constructedUrl = "$baseUrl?apiKey=$apiKey&search_field=name&search_value=$searchValue"
+        Log.d("API URL", constructedUrl)
+
         compositeDisposable.add(
             api.searchMovies(searchValue = searchValue)
                 .subscribeOn(Schedulers.io())

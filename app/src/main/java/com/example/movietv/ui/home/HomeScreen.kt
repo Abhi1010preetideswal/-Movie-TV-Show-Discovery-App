@@ -16,11 +16,27 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
-    // Fetch movies when the composable is launched
-    LaunchedEffect(Unit) {
-        // Update to use the correct method in HomeViewModel
-        viewModel.searchMovies("Inception") // Replace "Inception" with any movie name
-    }
+    var searchQuery by remember { mutableStateOf("") }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Search Bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                modifier = Modifier.weight(1f),
+                placeholder = { Text("Search for movies...") }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = { viewModel.searchMovies(searchQuery) }) {
+                Text("Search")
+            }
+        }
 
     val movies by viewModel.movies.observeAsState(emptyList())
     val error by viewModel.error.observeAsState("")
@@ -39,10 +55,12 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
         if (error.isNotEmpty()) {
             Snackbar(modifier = Modifier.align(Alignment.BottomCenter)) {
                 Text(text = error)
+                }
             }
         }
     }
 }
+
 
 
 
