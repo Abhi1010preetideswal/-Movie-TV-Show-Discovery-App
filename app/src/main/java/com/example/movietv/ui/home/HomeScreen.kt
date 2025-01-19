@@ -9,9 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movietv.viewmodel.HomeViewModel
-import com.example.movietv.network.model.MovieOrShow
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -38,33 +36,44 @@ fun HomeScreen(viewModel: HomeViewModel = getViewModel()) {
             }
         }
 
-    val movies by viewModel.movies.observeAsState(emptyList())
-    val error by viewModel.error.observeAsState("")
+        val movies by viewModel.movies.observeAsState(emptyList())
+        val error by viewModel.error.observeAsState("")
+        val loading by rememberUpdatedState(false)
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        if (movies.isEmpty()) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        } else {
-            LazyColumn {
-                items(movies) { movie ->
-                    MovieItem(movie)
-                }
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Loading spinner
+            if (loading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
-        }
 
-        if (error.isNotEmpty()) {
-            Snackbar(modifier = Modifier.align(Alignment.BottomCenter)) {
-                Text(text = error)
+            // Show movies or an empty message if no results
+            if (!loading && movies.isNotEmpty()) {
+                LazyColumn(modifier = Modifier.padding(8.dp)) {
+                    items(movies) { movie ->
+                        MovieItem(movie)
+                    }
+                }
+            } else if (!loading && error.isEmpty() && movies.isEmpty()) {
+                Text(
+                    text = "No results found",
+                    modifier = Modifier.align(Alignment.Center),
+                    style = MaterialTheme.typography.h6
+                )
+            }
+
+            // Show error message in a Snackbar
+            if (error.isNotEmpty()) {
+                Snackbar(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    action = {
+                        TextButton(onClick = { viewModel.setError("") }) {
+                            Text("Dismiss")
+                        }
+                    }
+                ) {
+                    Text(text = error)
                 }
             }
         }
     }
 }
-
-
-
-
-
-
-
-

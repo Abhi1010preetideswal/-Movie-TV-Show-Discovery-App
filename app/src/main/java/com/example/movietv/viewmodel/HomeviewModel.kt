@@ -20,6 +20,9 @@ class HomeViewModel(private val api: WatchmodeApi) : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
+    private val _loading = MutableLiveData<Boolean>(false)
+    val loading: LiveData<Boolean> get() = _loading
+
     private val baseUrl = "https://api.watchmode.com/v1/search/"
     private val apiKey = "WjOkFXMhndyW8rUXkaIP5oEm0iQrFbsdons3sovi"
 
@@ -29,6 +32,8 @@ class HomeViewModel(private val api: WatchmodeApi) : ViewModel() {
             _error.value = "Search value cannot be empty"
             return
         }
+        // Set loading state
+        _loading.value = true
 
         // Clear previous results
         _movies.value = emptyList()
@@ -42,6 +47,8 @@ class HomeViewModel(private val api: WatchmodeApi) : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
+                    _loading.value = false // Stop loading
+
                     if (response.title_results.isNotEmpty()) {
                         Log.d("API URL", "https://api.watchmode.com/v1/search/?apiKey=WjOkFXMhndyW8rUXkaIP5oEm0iQrFbsdons3sovi&search_field=name&search_value=$searchValue")
                         Log.d("API Response", response.title_results.toString())
