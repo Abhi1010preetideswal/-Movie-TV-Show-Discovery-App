@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
 //    implementation(libs.androidx.runtime.livedata)
 
+<<<<<<< HEAD
     // Testing
 //    testImplementation("org.jetbrains.kotlin:kotlin-test")
 //    testImplementation(libs.junit)
@@ -79,12 +80,22 @@ dependencies {
         testImplementation("androidx.arch.core:core-testing:2.1.0")
 
 
+=======
+    // Testing 
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation(libs.junit)
+>>>>>>> f2c204a5e26abb2214abed0883de0db988893b5b
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+     
+   // testImplementation("io.mockk:mockk:1.12.0")
+ 
+
 
     // Directly declared dependencies
     // Compose
