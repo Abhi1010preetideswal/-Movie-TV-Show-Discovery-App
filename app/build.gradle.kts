@@ -73,6 +73,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+     
+   // testImplementation("io.mockk:mockk:1.12.0")
+ 
+
+
     // Directly declared dependencies
     // Compose
     implementation("androidx.appcompat:appcompat:1.7.0")
