@@ -62,6 +62,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.runtime.livedata)
 //    implementation(libs.androidx.runtime.livedata)
+
+    // Testing 
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
