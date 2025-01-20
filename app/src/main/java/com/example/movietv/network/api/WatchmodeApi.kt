@@ -1,6 +1,5 @@
 package com.example.movietv.network.api
 
-//import com.example.movietv.network.model.MovieOrShow
 import com.example.movietv.network.model.MovieSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
